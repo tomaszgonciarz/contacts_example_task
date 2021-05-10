@@ -1,24 +1,20 @@
-# README
+# Intro
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+Ruby on Rails 6.1 example application without additional gems.
 
-Things you may want to cover:
+# Setup
 
-* Ruby version
+`bin/bundle install`
 
-* System dependencies
+# Testing
 
-* Configuration
+All: `bin/rails test`
 
-* Database creation
+Single file: `bin/rails test test/services/generate_contacts_test.rb`
 
-* Database initialization
+Selected line in file: `bin/rails test test/services/generate_contacts_test.rb:14`
 
-* How to run the test suite
+Docs:
 
-* Services (job queues, cache servers, search engines, etc.)
-
-* Deployment instructions
-
-* ...
+http://docs.seattlerb.org/minitest/Minitest/Assertions.html
+https://guides.rubyonrails.org/testing.html#available-assertions
