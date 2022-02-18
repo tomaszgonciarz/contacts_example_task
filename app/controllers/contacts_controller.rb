@@ -32,7 +32,7 @@ class ContactsController < ApplicationController
     Contact.import!(contact_attrs)
 
     emails = contact_attrs.map { |attr| attr[:email] }
-    contacts = Contact.where(email: emails).pluck(:id, :name, :email)
+    contacts = Contact.where(email: emails).select(:id, :name, :email)
 
     render json: contacts, status: :created
   rescue ArgumentError => e

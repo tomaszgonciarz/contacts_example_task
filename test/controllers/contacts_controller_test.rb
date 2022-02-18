@@ -47,6 +47,11 @@ class ContactsControllerTest < ActionDispatch::IntegrationTest
     p "End at: #{now}"
     p "Delta: #{now - time} seconds"
     assert_response 201
+
+    body = JSON.parse(response.body).first
+    assert_not_nil(body['id'])
+    assert_not_nil(body['name'])
+    assert_not_nil(body['email'])
   end
 
   test "#mass_create error" do
