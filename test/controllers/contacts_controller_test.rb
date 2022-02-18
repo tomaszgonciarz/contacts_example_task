@@ -12,16 +12,31 @@ class ContactsControllerTest < ActionDispatch::IntegrationTest
   end
 
   test "#create" do
-    assert_difference('Contact.count') do
-      post contacts_url, params: { contact: { email: @contact.email, name: @contact.name } }, as: :json
+    assert_difference('Address.count', 2) do
+      assert_difference('Contact.count') do
+        post contacts_url, params: { contact: { email: @contact.email,
+                                                name: @contact.name,
+                                                first_name: @contact.first_name,
+                                                last_name: @contact.last_name,
+                                                addresses_attributes: [
+                                                  { city: 'Warsaw',
+                                                  street: 'Wall Street',
+                                                  house_number: 1 },
+                                                  { city: 'Warsaw',
+                                                  street: 'Baker Street',
+                                                  house_number: 2 } ] } },
+                           as: :json
+      end
     end
 
     assert_response 201
+
+    body = JSON.parse(response.body)
+    assert_equal('First name one', body['first_name'])
+    assert_equal('Last name one', body['last_name'])
   end
 
   test "#mass_create" do
-    skip("Refactor needed")
-
     time = Time.now.to_i
     p "Start at: #{time}"
     assert_difference('Contact.count', 10000) do

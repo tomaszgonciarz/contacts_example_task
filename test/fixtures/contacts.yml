@@ -3,6 +3,8 @@
 one:
   name: Name One
   email: one@example.com
+  first_name: First name one
+  last_name: Last name one
 
 two:
   name: Name Two
