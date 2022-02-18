@@ -29,14 +29,10 @@ class ContactsController < ApplicationController
   # POST /mass_create
   def mass_create
     contact_attrs = params[:contact_attrs] || GenerateContacts.new.call
+    Contact.import!(contact_attrs)
 
-    contacts = []
-
-    contact_attrs.each do |attrs|
-      contact = Contact.new(attrs)
-      contact.save!
-      contacts << {id: contact.id, name: contact.name, email: contact.email}
-    end
+    emails = contact_attrs.map { |attr| attr[:email] }
+    contacts = Contact.where(email: emails).pluck(:id, :name, :email)
 
     render json: contacts, status: :created
   end
