@@ -49,6 +49,15 @@ class ContactsControllerTest < ActionDispatch::IntegrationTest
     assert_response 201
   end
 
+  test "#mass_create error" do
+    assert_no_difference'Contact.count' do
+      post mass_create_contacts_url, params: { contact_attrs: [ { name: 'name', email: 'email' }, { name: nil, email: 'email2' }] }, as: :json
+    end
+
+    assert_response 422
+    assert_equal('Invalid arguments!', JSON.parse(response.body)['error'])
+  end
+
   test "#show" do
     get contact_url(@contact), as: :json
     assert_response :success

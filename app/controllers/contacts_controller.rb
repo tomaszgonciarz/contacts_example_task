@@ -35,6 +35,8 @@ class ContactsController < ApplicationController
     contacts = Contact.where(email: emails).pluck(:id, :name, :email)
 
     render json: contacts, status: :created
+  rescue ArgumentError => e
+    render json: { error: "#{e}" }, status: :unprocessable_entity
   end
 
   # PATCH/PUT /contacts/1
